@@ -1,4 +1,4 @@
-﻿.AssetContainer {
+.HeirContainer {
     display: flex;
     position: relative;
     flex-direction: column;
@@ -6,15 +6,27 @@
     align-items: center;
     background-color: #EFFAF7;
     width: 100%;
-    padding: 0 8vh 2vh 8vh;
+    padding: 1.5vh 2vw;
     border-radius: 8px;
     box-shadow: 2px 2px 0 rgba(51, 51, 51, 0.2);
 }
 
-.AssetContainer-remove-btn {
-    position: absolute;
-    top: -2%;
-    right: 1%;
+.TopBox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+    .TopBox a {
+        margin-left: auto;
+    }
+
+h4 {
+    font-size: 1em;
+    color: #333;
+    margin: 2vh;
+    font-family: Arial, sans-serif;
 }
 
 .tooltip {
@@ -23,7 +35,7 @@
     color: #000000;
     border-bottom: 1px dotted black;
     cursor: default;
-}   
+}
 
 
     .tooltip .tooltiptext {
@@ -55,36 +67,6 @@
         opacity: 1;
     }
 
-.Remove-btn {
-    background: none;
-    border: none;
-    font-size: 1.5em;
-    cursor: pointer;
-}
-
-.NoteBox {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    justify-content: left;
-    margin-bottom: 4vh;
-}
-
-a {
-    text-decoration: none;
-    font-family: Arial, sans-serif;
-}
-a:hover {
-    cursor: pointer;
-}
-
-h4 {
-    font-size: 1em;
-    color: #333;
-    margin-bottom: 2vh;
-    font-family: Arial, sans-serif;
-}
-
 ::deep select, ::deep input {
     all: unset;
     font-size: 1em;
@@ -101,7 +83,6 @@ h4 {
     box-sizing: border-box;
 }
 
-
 ::deep select {
     background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDE2IDgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBvbHlnb24gcG9pbnRzPSIwLDAsMTYsMCw4LDgiIHN0eWxlPSJmaWxsOiM0MjQyNDI7c3Ryb2tlOm5vbmU7Ii8+PC9zdmc+');
     background-repeat: no-repeat;
@@ -109,14 +90,19 @@ h4 {
     background-size: 1.5vh 1.5vw;
 }
 
-
-::deep Form {
-    width: 75%;
+.AssetContainer-remove-btn {
+    position: absolute;
+    top: 2%; 
+    right: 2%;
 }
 
-/* Hover and focus effects */
-::deep select:hover, ::deep select:focus,
-::deep input:hover, ::deep input:focus {
-    border-color: #aaa;
-    outline: none;
+.Remove-btn {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+::deep .validation-message {
+    color: red;
 }

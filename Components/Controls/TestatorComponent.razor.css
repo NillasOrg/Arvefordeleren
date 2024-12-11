@@ -1,0 +1,59 @@
+.testator-container {
+    margin-top: 2vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+::deep input {
+    width: 100%;
+    padding: 1vw;
+    background-color: #fdfdfd;
+    color: #333;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 0 rgba(51, 51, 51, 0.2);
+    margin-bottom: 2vh;
+}
+
+::deep input:disabled {
+    width: 100%;
+    padding: 1vw;
+    background-color: #e0e0e0;
+    color: #333;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 0 rgba(51, 51, 51, 0.2);
+    margin-bottom: 2vh;
+}
+
+label {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    margin-bottom: 0.5vh;
+    font-size: 1rem;
+}
+
+
+.topInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+}
+.topInfo p {
+    width: 90%;
+}
+
+.topInfo > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 10%;
+}
+
+::deep .validation-message {
+    color: red;
+}

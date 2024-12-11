@@ -1,0 +1,81 @@
+﻿@inject NavigationManager NavigationManager
+
+
+<div class="file-upload">
+    <label for="fileInput" class="custom-file-label">Vælg filer</label>
+    <InputFile id="fileInput" OnChange="HandleFileChange" multiple />
+</div>
+
+<div class="chosen-files">
+    <ul>
+        @if (_fileNames.Any())
+        {
+            @foreach (var filename in _fileNames)
+            {
+                <li>@filename</li>
+            }
+        }
+    </ul>
+</div>
+
+<button class="upload-button" @onclick="HandleUpload" disabled="@(!_selectedFiles.Any())">Upload</button>
+
+@if (popUpSucces)
+{
+    <div class="success-popup">
+        Uploader filer...
+    </div>
+}
+    
+
+@code {
+    private List<string> _fileNames = [];
+
+    private List<IBrowserFile> _selectedFiles = new();
+
+    private bool popUpSucces = false;
+
+    private async Task HandleFileChange(InputFileChangeEventArgs e)
+    {
+        _selectedFiles = e.GetMultipleFiles().ToList();
+        _fileNames = _selectedFiles.Select(file => file.Name).ToList();
+    }
+
+    private async Task HandleUpload()
+    {
+        if (!_selectedFiles.Any())
+        {
+            return; // ingen handlinger hvis vi kkke uploader en flyvende fis
+        }
+
+        foreach (var file in _selectedFiles)
+        {
+            await using var stream = file.OpenReadStream();
+            switch (file.Name)
+            {
+                case "Testators.csv":
+                    await CSVImporter.ReadTestators(stream);
+                    break;
+
+                case "Assets.csv":
+                    await CSVImporter.ReadAssets(stream);
+                    break;
+
+                case "Heirs.csv":
+                    await CSVImporter.ReadHeirs(stream);
+                    break;
+            }
+        }
+
+        popUpSucces = true;
+        StateHasChanged();
+
+        await Task.Delay(2000);
+
+        //fjern popup og hop videre til programmet
+        popUpSucces = false;
+        StateHasChanged();
+        NavigationManager.NavigateTo("arvelader");
+    }
+}
+

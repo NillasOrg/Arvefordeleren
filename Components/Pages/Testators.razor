@@ -1,0 +1,113 @@
+﻿@page "/arvelader"
+@using Arvefordeleren.Components.Layout
+
+<div class="main-container">
+    <div class="headliner-container">
+        <h3>Velkommen til Arvefordeleren</h3>
+        <h3>Indtast dine oplysninger</h3>
+    </div>
+
+    <div class="info">
+        <p>Ønsker du at lave arvsfordeling alene, skal du blot indtaste dine oplysninger. Ønsker du at lave en arvsfordeling med en sammenlever eller ægtefælle, skal du blot tilføje vedkommende.</p>
+    </div>
+
+    <div class="tooltip">
+        Hjælp
+        <span class="tooltiptext">Du kan oprette et testamente som enlig eller ægtefæller. Dette har betydning for hvordan din tvangsarv blandt andet testamenteres til efterkommere.</span>
+    </div>
+
+    <div class="body">
+        @if (TestatorRepository.testators.Any())
+        {
+            foreach (var testator in TestatorRepository.testators)
+            {
+                <div class="body-container">
+                    @if (testator.Id == 1)
+                    {
+                        <div class="topInfo">
+                            <p>Disse oplysninger gemmes ikke af os</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="topInfo">
+                            <p>Vil du tilføje din ægtefælle til arvsfordelingen?</p>
+                            <div> <MudSwitch @bind-Value="IsSecondary" Color="Color.Success" Size="Size.Large"/> </div>
+                        </div> 
+                    }
+                    
+                    <TestatorComponent Testator="testator"/>
+                </div>
+            }
+
+            if (TestatorRepository.testators.Count == 1)
+            {
+                <div class="body-container">
+                    <div class="topInfo">
+                        <p>Vil du tilføje din ægtefælle til arvsfordelingen?</p>
+                        <div> <MudSwitch @bind-Value="IsSecondary" Color="Color.Success" Size="Size.Large"/> </div>
+                    </div> 
+                </div>
+            }
+        }
+    </div>
+</div>
+
+
+
+@code {
+    [CascadingParameter] public NavMenu? NavMenu { get; set; }
+    private bool _isSecondary;
+    public bool IsSecondary
+    {
+        get => _isSecondary;
+        set
+        {
+            _isSecondary = value;
+            CreateSecondary();
+        }
+    }
+
+
+    private void CreateSecondary()
+    {
+        if (!IsSecondary)
+        {
+            TestatorRepository.DeleteTestator(2); // Altid slet testator 2 hvis den findes.
+        }
+        else if(TestatorRepository.testators.Count == 1)
+        {
+            TestatorRepository.AddNewTestator(new Testator());
+        }
+        
+        Validate();
+    }
+    
+    protected override void OnInitialized()
+    {
+        if (TestatorRepository.testators.Count == 2)
+        {
+            IsSecondary = true;
+        }
+        
+        if (!TestatorRepository.testators.Any())
+        {
+            TestatorRepository.AddNewTestator(new Testator());
+        }
+
+        if (NavMenu != null && !TestatorRepository.testators.Any())
+        {
+            NavMenu.IsValid = false;
+        }
+        
+        Validate();
+    }
+    
+    private void Validate()
+    {
+        if (NavMenu != null)
+        {
+            NavMenu.IsValid = ValidationService.IsAllFieldsValid(TestatorRepository.testators);
+        }
+    }
+}

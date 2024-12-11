@@ -1,0 +1,89 @@
+﻿<div class="RapportList-container">
+    <div class="tab-header">
+        <button class="tab-button @(showAsset ? "active" : "")" @onclick="ShowAsset">Aktiver</button>
+        <button class="tab-button @(!showAsset ? "active" : "")" @onclick="ShowHeir">Arvinger</button>
+    </div>
+
+    @if (showAsset)
+    {
+        <div class="content">
+            @foreach (Asset asset in assetList)
+            {
+                <div class="item @(asset == selectedItem ? "highlighted" : "")" @onclick="() => SelectItem(asset)">
+
+                    <div class="icon">
+                        <img class="icon" src="@asset.Icon" />
+                    </div>
+                    <div class="details">
+                        <strong>@asset.Type</strong>
+                        <p>@asset.Note</p>
+                    </div>
+
+                </div>
+            }
+        </div>
+    }
+    else if (!showAsset)
+    {
+        <div class="content">
+            @foreach (Heir heir in heirList)
+            {
+                <div class="item @(heir == selectedItem ? "highlighted" : "")" @onclick="() => SelectItem(heir) ">
+                    
+                    <div class="icon">
+                        <img class="icon" src="@heir.Icon" />
+                    </div>
+                    <div class="details">
+                        <strong>@heir.Name</strong>
+                        <p>@heir.Relation</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+
+    [Parameter]
+    public Asset? Asset { get; set; }
+
+    private object? selectedItem;
+
+    private bool showAsset = true;
+
+    private List<Asset> assetList;
+    private List<Heir> heirList;
+
+    protected override async Task OnInitializedAsync()
+    {
+        showAsset = true;
+
+        assetList = AssetsRepository.Assets;
+    }
+
+    private void ShowAsset()
+    {
+        if(!showAsset)
+        {
+            showAsset = true;
+
+            assetList = AssetsRepository.Assets;
+        }
+    }
+
+    private void ShowHeir()
+    {
+        if(showAsset)
+        {
+            showAsset = false;
+
+            heirList = HeirsRepository.Heirs;
+        }
+    }
+
+    private void SelectItem(Object item)
+    {
+        selectedItem = item;
+    }
+}

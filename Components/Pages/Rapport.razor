@@ -1,0 +1,54 @@
+﻿@page "/rapport"
+@using System.IO.Compression
+@inject IJSRuntime JS
+
+<div class="main-container">
+    <div class="headliner-container">
+        <h3>Rapport</h3>
+    </div>
+    
+    <div class="body">
+        <div class="left-body">
+            <FreePiechartComponent InheritanceInput="@FreeInheritanceSeries" />
+        </div>
+        <div class="right-body">
+            <RapportListComponent/>
+        </div>
+    </div>
+    <div class="btn-box">
+        <button @onclick="_download">Download</button>
+        <button id="contact">Kontakt en Advokat</button>
+
+    </div>
+</div>
+
+@code {
+    private List<Heir> FreeInheritance { get; set; } = new List<Heir>();
+
+    private List<FreePiechartComponent.PieChartSeriesProps> FreeInheritanceSeries => FreeInheritance.Select(h => new FreePiechartComponent.PieChartSeriesProps { Name = h.Name, Value = h.Share }).ToList();
+    
+    private async Task _download()
+    {
+        if (AssetsRepository.Assets.Any())
+             CSVExporter.AssetsExport(AssetsRepository.Assets);
+        
+        if (TestatorRepository.testators.Any())
+            CSVExporter.TestatorsExport(TestatorRepository.testators);
+        
+        if (HeirsRepository.Heirs.Any())
+            CSVExporter.HeirsExport(HeirsRepository.Heirs);
+
+        if (File.Exists(@"Data/data.zip"))
+        {
+            File.Delete(@"Data/data.zip");
+        }
+        
+        ZipFile.CreateFromDirectory("Data/Downloads/", "Data/data.zip");
+        var fileStream = File.OpenRead(@"Data/data.zip");
+        var fileName = "Arvefordeleren.zip";
+
+        using var streamRef = new DotNetStreamReference(stream: fileStream);
+
+        await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
+    }
+}

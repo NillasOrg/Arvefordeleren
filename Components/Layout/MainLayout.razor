@@ -1,18 +1,45 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager navManager
 
 <div class="Container">
-    <div>
-        <NavMenu/>
-    </div>
+    @if (!isHomePage)
+    {
+        <div>
+            <NavMenu @ref="navMenu"/>
+        </div>
+    }
 
-    <main>
-        <article>
-            @Body
-        </article>
-    </main>
+    @if (navMenu != null)
+    {
+        <CascadingValue Value="navMenu">
+            <main>
+                @Body
+            </main>
+        </CascadingValue>
+    }
 </div>
 
-<div>
-    <a></a>
-    <a></a>
-</div>
+
+@* Required *@
+<MudThemeProvider />
+<MudPopoverProvider />
+
+@* Needed for dialogs *@
+<MudDialogProvider />
+
+@* Needed for snackbars *@
+<MudSnackbarProvider />
+
+@code {
+    private NavMenu navMenu;
+    private bool isHomePage => navManager.Uri.EndsWith("/");
+    
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            StateHasChanged();
+        }
+    }
+
+}

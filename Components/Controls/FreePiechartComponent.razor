@@ -1,0 +1,50 @@
+﻿<div class="graph-div">
+    <div class="title">
+        <div class="title-left">
+            <h4>Friarv</h4>
+        </div>
+        <div class="title-right">
+            <div class="tooltip">
+                Hjælp
+                <span class="tooltiptext">Dette er resultatet er deres friarv. Her kan de se fordelingen baseret på dine indtastninger. De kan frit gå tilbage og ændre for at se en anderledes konstellation.</span>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="graph-body">
+        <div class="graph-left">
+            <MudChart ChartType="ChartType.Pie" InputData="@HeirsValues.ToArray()" InputLabels="@HeirsLabels.ToArray()"
+                      Width="100%"
+                      >
+            </MudChart>
+        </div>
+
+        <div class="graph-right">
+            <div class="graph-grid">
+                @foreach (var heir in HeirsList)
+                {
+                <div>
+                    <MudTextField Label=@($"Andel for: {heir.Name} ") @bind-Value="heir.Share" Type="number"/>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+
+    public class PieChartSeriesProps
+    {
+        public string Name { get; set; }
+        public double Value { get; set; }
+
+    }
+
+    [Parameter]
+    public List<PieChartSeriesProps> InheritanceInput { get; set; } = new List<PieChartSeriesProps>();
+    private List<Heir> HeirsList => HeirsRepository.Heirs;
+
+    private List<double> HeirsValues => HeirsList.Select(heir => heir.Share).ToList();
+    private List<string> HeirsLabels => HeirsList.Select(heir => heir.Name).ToList();
+}

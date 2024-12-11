@@ -1,27 +1,56 @@
 ﻿<div class="AssetContainer">
-    <h4>Angiv aktiv</h4>
-    <select name="Types">
-        @foreach (AssetType type in Enum.GetValues(typeof(AssetType)))
+    <div>
+        <div>
+            <h4>Aktiv</h4>
+        </div>
+        <div class="AssetContainer-remove-btn">
+            <button class="Remove-btn" @onclick="() => Close(asset)">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <EditForm Model="asset">
+        <InputSelect @bind-Value="asset.Type" name="Types">
+            @foreach (AssetType type in Enum.GetValues(typeof(AssetType)))
+            {
+                <option value=@type>@type.ToString()</option>
+            }
+        </InputSelect>
+
+        @if (Note || asset.Note != null)
         {
-            <option value=@type>@type.ToString()</option>
+        <InputText @bind-Value="asset.Note" id="inputBox" placeholder="Note"/>
         }
-    </select>
-    
-    @if (Note)
-    {
-        <input type="text" placeholder="Note"/>
-    }
-    else
-    {
+        else
+        {
         <div class="NoteBox">
             <a @onclick="() => Note = true">Tilføj Note (+)</a>
         </div>
-    }
+        }
+    </EditForm>
     
-    <a>Hjælp</a>
+    <div class="tooltip">
+        Hjælp
+        <span class="tooltiptext">Her skal du oprette dine aktiver. De kan være af forskellig type. Tilføj en note med en tekst for at uddybe hvor du kan. Det gør vores arbejde nemmere!</span>
+    </div>
 </div>
 
 
 @code {
+    [Parameter]
+    public Asset asset { get; set; }
+
     private bool Note = false;
+
+    [Parameter]
+    public EventCallback<Asset> OnClose { get; set; }
+
+    private async void Close(Asset asset)
+    {
+        if (OnClose.HasDelegate)
+        {
+            await OnClose.InvokeAsync(asset);
+        }
+    }
+
 }

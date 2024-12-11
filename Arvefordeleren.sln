@@ -1,6 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arvefordeleren", "Arvefordeleren.csproj", "{310CBD11-2BF6-46C7-A09E-2A1A745C222C}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arvefordeleren", "Arvefordeleren.csproj", "{310CBD11-2BF6-46C7-A09E-2A1A745C222C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +15,11 @@ Global
 		{310CBD11-2BF6-46C7-A09E-2A1A745C222C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{310CBD11-2BF6-46C7-A09E-2A1A745C222C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{310CBD11-2BF6-46C7-A09E-2A1A745C222C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CB0F6B27-38DB-4530-AAA3-1FA99BF47799}
 	EndGlobalSection
 EndGlobal

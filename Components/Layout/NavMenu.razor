@@ -1,25 +1,84 @@
-﻿<div class="Sidebox">
+﻿@inject NavigationManager NavigationManager
+
+<div class="Sidebox">
     <div class="TopBox">
-        Arvefordeleren
+        <a href="/">Arvefordeleren</a>
     </div>
     <div class="MidBox">
-        <NavLink href="arvelader">
+
+        <NavLink class="navLink" href="arvelader" Match="NavLinkMatch.All">
             Arvelader
         </NavLink>
-        <NavLink href="aktiv">
+        <NavLink class="navLink" href="aktiv">
             Aktiver
         </NavLink>
-        <NavLink href="arving">
+        <NavLink class="navLink" href="arvinger">
             Arvinger
         </NavLink>
-        <NavLink href="rapport">
+        <NavLink class="navLink" href="rapport">
             Rapport
         </NavLink>
     </div>
     <div class="BotBox">
-        <button>Tilbage</button>
-        <button>Næste</button>
-
+        <button @onclick="() => Back()" class="Back">Tilbage</button>
+        @if (IsValid)
+        {
+            <button @onclick="() => Next()" class="Next">Næste</button>
+        }
+        else
+        {
+            <button class="Next" disabled>Næste</button>
+        }
     </div>
-
 </div>
+
+@code
+{
+    private bool isValid;
+
+    public bool IsValid
+    {
+        get => isValid;
+        set
+        {
+            isValid = value;
+            InvokeAsync(StateHasChanged);
+        }
+    }
+    
+    private void Back()
+    {
+        switch (NavigationManager.ToBaseRelativePath(NavigationManager.Uri))
+        {
+            case "arvelader":
+                break;
+            case "aktiv":
+                NavigationManager.NavigateTo("/arvelader");
+                break;
+            case "arvinger":
+                NavigationManager.NavigateTo("/aktiv");
+                break;
+            case "rapport":
+                NavigationManager.NavigateTo("/arvinger");
+                break;
+        }
+    }
+    
+    private void Next()
+    {
+        switch (NavigationManager.ToBaseRelativePath(NavigationManager.Uri))
+        {
+            case "arvelader":
+                NavigationManager.NavigateTo("/aktiv");
+                break;
+            case "aktiv":
+                NavigationManager.NavigateTo("/arvinger");
+                break;
+            case "arvinger":
+                NavigationManager.NavigateTo("/rapport");
+                break;
+            case "rapport":
+                break;
+        }
+    }
+}

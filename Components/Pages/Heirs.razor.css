@@ -1,11 +1,14 @@
-﻿.AssetContainer {
+.HeirContainer {
+    font-family: Arial, sans-serif;
     width: 80vw;
+
 }
 
 .TopContainer {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: left;
+    padding-left: 5vw;
     align-items: center;
     background-color: #EFFAF7;
     width: 100%;
@@ -16,10 +19,10 @@
 
 }
 
-
-.TopQuestion {
-    margin: 4vw;
+.TopText{
+    margin-right: 40px;
 }
+
 
 .SelectorContainer {
     display: grid;
@@ -41,7 +44,7 @@
     height: 20vh;
     align-items: flex-start;
 }
-button {
+.AddButton {
     width: 100%;
     height: 50%;
     background-color: #76EE9A;
@@ -80,6 +83,7 @@ label {
     content: '';
     position: absolute;
     top: 3px;
+    left: 5px;
     width: 20px;
     height: 20px;
     background-color: white;
@@ -92,5 +96,21 @@ label {
 }
 
 .toggle-checkbox:checked + .toggle-label::before {
-    transform: translateX(3.5vw);
+    transform: translateX(3vw);
 }
+
+h1 {
+    font-weight: lighter;
+}
+
+.HeirSelectorComponent {
+    position: relative;
+}
+
+.Selector {
+    position: relative;
+}
+
+
+
+

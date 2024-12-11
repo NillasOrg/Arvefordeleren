@@ -1,1 +1,30 @@
-﻿@page "/"
+@inject NavigationManager NavigationManager
+@page "/"
+@layout EmptyLayout;
+<div class="body" xmlns="http://www.w3.org/1999/html">
+    <div class="hero">
+        <img src="images/Background.png"/>
+        <div class="hero-content">
+            <h1>Arvefordeleren</h1>
+            <button @onclick="Start">Start din fordeling</button>
+        </div>
+      
+        <div class="content">
+            <div class="tooltip">
+                Hjælp
+                <span class="tooltiptext">Indlæs et tidligere udarbejdet testamente, for at rette i det eller blot for at se dette igen.<br/><br/> Indlæs dine .csv filer som du downloadede sidst og upload dem til programmet</span>
+            </div>
+            <h1>Vil du importere dit data? </h1>
+            <ImportCSVComponent/>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private void Start()
+    {
+        NavigationManager.NavigateTo("/arvelader");
+    }
+
+}

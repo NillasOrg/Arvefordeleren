@@ -1,56 +1,115 @@
 ﻿@page "/Aktiv"
+@using Arvefordeleren.Components.Layout
+
 <div class="AssetContainer">
     <div class="TopContainer">
         <div class="TopQuestion">
             <label>Har du en bil?</label>
             <div class="toggle-container">
-                <input type="checkbox" id="toggle1" class="toggle-checkbox">
-                <label for="toggle1" class="toggle-label"></label>
+                <MudSwitch @bind-Value="Car" Color="Color.Success" Size="Size.Large" @onclick="CarBool" />
             </div>
         </div>
         <div class="TopQuestion">
             <label>Har du en bolig?</label>
             <div class="toggle-container">
-                <input type="checkbox" id="toggle2" class="toggle-checkbox">
-                <label for="toggle2" class="toggle-label"></label>
+                <MudSwitch @bind-Value="Home" Color="Color.Success" Size="Size.Large" @onclick="HomeBool"/>
             </div>
         </div>
         <div class="TopQuestion">
             <label>Har du en opsparing?</label>
             <div class="toggle-container">
-                <input type="checkbox" id="toggle3" class="toggle-checkbox">
-                <label for="toggle3" class="toggle-label"></label>
+                <MudSwitch @bind-Value="TempBool" Color="Color.Success" Size="Size.Large" />
             </div>
         </div>
         <div class="TopQuestion">
             <label>Har du en pensionsopsparing?</label>
             <div class="toggle-container">
-                <input type="checkbox" id="toggle4" class="toggle-checkbox">
-                <label for="toggle4" class="toggle-label"></label>
+                <MudSwitch @bind-Value="TempBool" Color="Color.Success" Size="Size.Large" />
             </div>
         </div>
+       
     </div>
 
     <div class="SelectorContainer">
-        @for (var i = 0; i <= _componentAmount; i++)
+        @foreach (var asset in AssetsRepository.Assets)
         {
-        <div class="Selector">
-            <AssetSelectorComponent/>
-        </div>
+            <div class="Selector">
+                <AssetSelectorComponent asset="asset" OnClose="HandleClose" />
+            </div>
         }
         <div class="Selector" id="ButtonBox">
-            <button @onclick="AddComponent">Tilføj flere (+)</button>
+            <button @onclick="AddAsset">Tilføj flere (+)</button>
         </div>
     </div>
 </div>
 
-
-
 @code {
-    private int _componentAmount;
+    [CascadingParameter] public NavMenu NavMenu { get; set; }
+    private bool Car;
+    private bool Home;
+    private bool TempBool;
+
     
-    private void AddComponent()
+    protected override void OnInitialized()
     {
-        _componentAmount++;
+        NavMenu.IsValid = true;
+        Car = AssetsRepository.Car;
+        Home = AssetsRepository.Home;
+        TempBool = AssetsRepository.TempBool;
+    }
+
+    private void CarBool()
+    {
+        Car = !Car;
+        AssetsRepository.Car = Car;
+        if (Car)
+        {
+            if (!AssetsRepository.Assets.Any(a => a.Type == AssetType.Køretøj))
+            {
+                var asset = new Asset(AssetType.Køretøj);
+                AssetsRepository.AddAsset(asset);
+            }
+        }
+        else
+        {
+            var asset = AssetsRepository.Assets.FirstOrDefault(a => a.Type == AssetType.Køretøj);
+            if (asset != null)
+            {
+                AssetsRepository.Assets.Remove(asset);
+            }
+        }
+    }
+
+    private void HomeBool()
+    {
+        Home = !Home;
+        AssetsRepository.Home = Home;
+        if (Home)
+        {
+            if (!AssetsRepository.Assets.Any(a => a.Type == AssetType.Bolig))
+            {
+                var asset = new Asset(AssetType.Bolig);
+                AssetsRepository.AddAsset(asset);
+            }
+        }
+        else
+        {
+            var asset = AssetsRepository.Assets.FirstOrDefault(a => a.Type == AssetType.Bolig);
+            if (asset != null)
+            {
+                AssetsRepository.Assets.Remove(asset);
+            }
+        }
+    }
+
+    private void AddAsset()
+    {
+        var asset = new Asset(AssetType.Værdigenstand);
+        AssetsRepository.AddAsset(asset);
+    }
+
+    private void HandleClose(Asset asset)
+    {
+        AssetsRepository.Assets.Remove(asset);
     }
 }

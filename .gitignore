@@ -5,6 +5,8 @@
 
 # dotenv files
 .env
+Data/Downloads/*.csv
+Data/*.zip
 
 # User-specific files
 *.rsuser
