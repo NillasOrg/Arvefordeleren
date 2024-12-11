@@ -35,12 +35,9 @@ namespace Arvefordeleren.Models
 
                     case RelationType.Bedsteforældre:
                         return "/images/Bedsteforældre.png";
-
-                    case RelationType.Andet:
-                        return "/images/Andet.png";
-
+                    
                     default:
-                        return "/images/favicon.png";
+                        return "/images/Andet.png";
                 }
             }
         }
@@ -49,7 +46,7 @@ namespace Arvefordeleren.Models
 
     public enum RelationType
     {
-       Barn, Barnebarn, Forældre, Bedsteforældre, Andet
+       Barn, Barnebarn, Søskende, Forældre, Bedsteforældre, Andet
     }
 
     public enum TypeOfChild
