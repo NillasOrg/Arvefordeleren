@@ -6,10 +6,19 @@ using CsvHelper;
 
 namespace Arvefordeleren.Services;
 
-public static class CSVImporter
+public class CSVImporter
 {
     
-    public static async Task ReadHeirs(Stream stream)
+    private readonly TestatorRepository TestatorRepository;
+    private readonly HeirsRepository HeirsRepository;
+
+    public CSVImporter(TestatorRepository testatorRepository, HeirsRepository heirsRepository)
+    {
+        TestatorRepository = testatorRepository;
+        HeirsRepository = heirsRepository;
+    }
+    
+    public async Task ReadHeirs(Stream stream)
     {
         HeirsRepository.Heirs.Clear();
         using (var reader = new StreamReader(stream, Encoding.UTF8))
@@ -23,7 +32,7 @@ public static class CSVImporter
         }
     }
     
-    public static async Task ReadAssets(Stream stream)
+    public async Task ReadAssets(Stream stream)
     {
         AssetsRepository.Assets.Clear();
         using (var reader = new StreamReader(stream, Encoding.UTF8))
@@ -37,9 +46,9 @@ public static class CSVImporter
         }
     }
     
-    public static async Task ReadTestators(Stream stream)
+    public async Task ReadTestators(Stream stream)
     {
-        TestatorRepository.testators.Clear();
+        TestatorRepository.Testators.Clear();
         using (var reader = new StreamReader(stream, Encoding.UTF8))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
         {

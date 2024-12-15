@@ -1,5 +1,6 @@
 ﻿@page "/rapport"
-@using System.IO.Compression
+@inject TestatorRepository TestatorRepository
+@inject HeirsRepository HeirsRepository
 @inject IJSRuntime JS
 
 <div class="main-container">
@@ -33,8 +34,8 @@
         if (AssetsRepository.Assets.Any())
              CSVExporter.AssetsExport(AssetsRepository.Assets);
         
-        if (TestatorRepository.testators.Any())
-            CSVExporter.TestatorsExport(TestatorRepository.testators);
+        if (TestatorRepository.Testators.Any())
+            CSVExporter.TestatorsExport(TestatorRepository.Testators);
         
         if (HeirsRepository.Heirs.Any())
             CSVExporter.HeirsExport(HeirsRepository.Heirs);

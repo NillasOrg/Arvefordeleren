@@ -1,4 +1,6 @@
-﻿<div class="RapportList-container">
+﻿@inject HeirsRepository HeirsRepository
+
+<div class="RapportList-container">
     <div class="tab-header">
         <button class="tab-button @(showAsset ? "active" : "")" @onclick="ShowAsset">Aktiver</button>
         <button class="tab-button @(!showAsset ? "active" : "")" @onclick="ShowHeir">Arvinger</button>

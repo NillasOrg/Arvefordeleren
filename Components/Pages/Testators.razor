@@ -1,5 +1,6 @@
 ﻿@page "/arvelader"
-@using Arvefordeleren.Components.Layout
+@inject TestatorRepository TestatorRepository
+
 
 <div class="main-container">
     <div class="headliner-container">
@@ -17,9 +18,9 @@
     </div>
 
     <div class="body">
-        @if (TestatorRepository.testators.Any())
+        @if (TestatorRepository.Testators.Any())
         {
-            foreach (var testator in TestatorRepository.testators)
+            foreach (var testator in TestatorRepository.Testators)
             {
                 <div class="body-container">
                     @if (testator.Id == 1)
@@ -40,7 +41,7 @@
                 </div>
             }
 
-            if (TestatorRepository.testators.Count == 1)
+            if (TestatorRepository.Testators.Count == 1)
             {
                 <div class="body-container">
                     <div class="topInfo">
@@ -75,7 +76,7 @@
         {
             TestatorRepository.DeleteTestator(2); // Altid slet testator 2 hvis den findes.
         }
-        else if(TestatorRepository.testators.Count == 1)
+        else if(TestatorRepository.Testators.Count == 1)
         {
             TestatorRepository.AddNewTestator(new Testator());
         }
@@ -85,17 +86,17 @@
     
     protected override void OnInitialized()
     {
-        if (TestatorRepository.testators.Count == 2)
+        if (TestatorRepository.Testators.Count == 2)
         {
             IsSecondary = true;
         }
         
-        if (!TestatorRepository.testators.Any())
+        if (!TestatorRepository.Testators.Any())
         {
             TestatorRepository.AddNewTestator(new Testator());
         }
 
-        if (NavMenu != null && !TestatorRepository.testators.Any())
+        if (NavMenu != null && !TestatorRepository.Testators.Any())
         {
             NavMenu.IsValid = false;
         }
@@ -107,7 +108,7 @@
     {
         if (NavMenu != null)
         {
-            NavMenu.IsValid = ValidationService.IsAllFieldsValid(TestatorRepository.testators);
+            NavMenu.IsValid = ValidationService.IsAllFieldsValid(TestatorRepository.Testators);
         }
     }
 }

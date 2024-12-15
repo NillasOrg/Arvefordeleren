@@ -5,16 +5,24 @@ namespace Arvefordeleren.Services
 {
     public class TestatorService
     {
-        public void EstablishRelationToHeir(Heir heir, int? selectedTestatorId)
-        {
-            if (selectedTestatorId.HasValue)
-            {
-                var newTestator = TestatorRepository.testators.FirstOrDefault(t => t.Id == selectedTestatorId);
+        private readonly TestatorRepository _testatorRepository;
 
-                if (newTestator != null && !newTestator.Heirs.Any(h => h.Id == heir.Id))
-                {
-                    newTestator.Heirs.Add(heir);
-                }
+        public TestatorService(TestatorRepository testatorRepository)
+        {
+            _testatorRepository = testatorRepository;
+        }
+
+        public async Task EstablishRelationToHeirAsync(Heir heir, int? selectedTestatorId)
+        {
+            if (!selectedTestatorId.HasValue)
+                return;
+            
+            var testator = _testatorRepository.GetTestatorById(selectedTestatorId.Value);
+            if (testator != null && !testator.Heirs.Any(h => h.Id == heir.Id))
+            {
+                testator.Heirs.Add(heir);
+
+                await _testatorRepository.SaveChangesAsync();
             }
         }
     }

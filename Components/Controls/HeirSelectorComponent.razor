@@ -1,4 +1,7 @@
-@using Arvefordeleren.Components.Layout
+@inject TestatorRepository TestatorRepository
+@inject TestatorService TestatorService
+@inject HeirsRepository HeirsRepository
+
 <div class="HeirContainer">
     <div class="TopBox">
         <div>
@@ -19,7 +22,7 @@
 
         <select @bind="@SelectedTestatorId" name="Testator" @onclick="Validate">
             <option value="">Angiv relation</option>
-            @foreach (var testator in TestatorRepository.testators)
+            @foreach (var testator in TestatorRepository.Testators)
             {
                 <option value="@testator.Id">@testator.Name</option>
             }
@@ -65,7 +68,6 @@
 
     private EditContext editContext;
     private bool Note = false;
-    private TestatorService service = new TestatorService();
 
     private int? selectedTestatorId;
     public int? SelectedTestatorId
@@ -79,12 +81,12 @@
                 selectedTestatorId = value;
                 if(selectedTestatorId == 3)
                 {
-                    service.EstablishRelationToHeir(Heir, 1);
-                    service.EstablishRelationToHeir(Heir, 2);
+                    TestatorService.EstablishRelationToHeirAsync(Heir, 1);
+                    TestatorService.EstablishRelationToHeirAsync(Heir, 2);
                 }
                 else
                 {
-                    service.EstablishRelationToHeir(Heir, selectedTestatorId);
+                    TestatorService.EstablishRelationToHeirAsync(Heir, selectedTestatorId);
                 }
             }
         }
@@ -99,7 +101,7 @@
 
     protected override void OnInitialized()
     {
-        var existingTestator = TestatorRepository.testators.FirstOrDefault(t => t.Heirs.Any(h => h.Name == Heir.Name && h.RelationType == Heir.RelationType));
+        var existingTestator = TestatorRepository.Testators.FirstOrDefault(t => t.Heirs.Any(h => h.Name == Heir.Name && h.RelationType == Heir.RelationType));
         if (existingTestator != null)
         {
             SelectedTestatorId = existingTestator.Id;

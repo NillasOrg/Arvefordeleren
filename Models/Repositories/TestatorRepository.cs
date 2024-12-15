@@ -1,27 +1,36 @@
 ﻿namespace Arvefordeleren.Models.Repositories
 {
-    public static class TestatorRepository
+    public class TestatorRepository
     {
-        public static List<Testator> testators { get; set; } = new List<Testator>();
+        private readonly StorageService _storageService;
+        public List<Testator> Testators { get; private set; } = new List<Testator>();
 
-        public static void AddNewTestator(Testator testator)
+        public TestatorRepository(StorageService storageService)
         {
-            int maxId = testators.Any() ? testators.Max(t => t.Id) : 0; // Hvis listen er tom, start med ID 1
+            _storageService = storageService;
+        }
+        
+        public void AddNewTestator(Testator testator)
+        {
+            int maxId = Testators.Any() ? Testators.Max(t => t.Id) : 0;
             testator.Id = maxId + 1;
-            testators.Add(testator);
+            Testators.Add(testator);
         }
 
-        public static Testator GetTestatorById(int id) => testators.FirstOrDefault(t => t.Id == id);
+        public Testator? GetTestatorById(int id) => Testators.FirstOrDefault(t => t.Id == id);
 
-        public static void DeleteTestator(int id)
+        public void DeleteTestator(int id)
         {
             var testator = GetTestatorById(id);
             if (testator != null)
             {
-                testators.Remove(testator);
+                Testators.Remove(testator);
             }
         }
 
-        
+        public async Task SaveChangesAsync()
+        {
+            await _storageService.SaveAsync("testators", Testators);
+        }
     }
 }

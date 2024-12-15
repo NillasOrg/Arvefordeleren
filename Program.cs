@@ -1,4 +1,5 @@
 using Arvefordeleren.Components;
+using Arvefordeleren.Models.Repositories;
 using Arvefordeleren.Services;
 using MudBlazor.Services;
 
@@ -6,6 +7,17 @@ using MudBlazor.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMudServices();
+
+// Services
+builder.Services.AddScoped<StorageService>();
+builder.Services.AddScoped<TestatorService>();
+builder.Services.AddScoped<CSVImporter>();
+
+// Repos
+builder.Services.AddScoped<TestatorRepository>();
+builder.Services.AddScoped<HeirsRepository>();
+
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
