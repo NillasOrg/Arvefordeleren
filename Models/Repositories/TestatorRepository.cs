@@ -1,12 +1,12 @@
 ﻿namespace Arvefordeleren.Models.Repositories
 {
-    public static class TestatorRepository
+    public class TestatorRepository
     {
-        public static List<Testator> testators { get; set; } = new List<Testator>();
+        public List<Testator> testators { get; set; } = new List<Testator>();
 
-        public static List<Person> ForcedHeirs => Shared.SharedData.ForcedHeirs;
+        public List<Person> ForcedHeirs => Shared.SharedData.ForcedHeirs;
 
-        public static void AddTestatorToForcedHeirs(Testator testator)
+        public void AddTestatorToForcedHeirs(Testator testator)
         {
 
             if (!ForcedHeirs.OfType<Testator>().Any(t => t.Id == testator.Id))
@@ -19,16 +19,16 @@
 
         }
 
-        public static void AddNewTestator(Testator testator)
+        public void AddNewTestator(Testator testator)
         {
             int maxId = testators.Any() ? testators.Max(t => t.Id) : 0; // Hvis listen er tom, start med ID 1
             testator.Id = maxId + 1;
             testators.Add(testator);
         }
 
-        public static Testator GetTestatorById(int id) => testators.FirstOrDefault(t => t.Id == id);
+        public Testator GetTestatorById(int id) => testators.FirstOrDefault(t => t.Id == id);
 
-        public static void DeleteTestator(int id)
+        public void DeleteTestator(int id)
         {
             var testator = GetTestatorById(id);
             if (testator != null)

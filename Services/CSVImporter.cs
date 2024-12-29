@@ -6,47 +6,61 @@ using CsvHelper;
 
 namespace Arvefordeleren.Services;
 
-public static class CSVImporter
+public class CSVImporter
 {
-    
-    public static async Task ReadHeirs(Stream stream)
+    private readonly HeirsRepository _heirsRepository;
+    private readonly AssetsRepository _assetsRepository;
+    private readonly TestatorRepository _testatorRepository;
+
+    // Constructor injection for dependencies
+    public CSVImporter(
+        HeirsRepository heirsRepository, 
+        AssetsRepository assetsRepository, 
+        TestatorRepository testatorRepository)
     {
-        HeirsRepository.Heirs.Clear();
+        _heirsRepository = heirsRepository;
+        _assetsRepository = assetsRepository;
+        _testatorRepository = testatorRepository;
+    }
+
+    public async Task ReadHeirs(Stream stream)
+    {
+        _heirsRepository.Heirs.Clear();
         using (var reader = new StreamReader(stream, Encoding.UTF8))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
         {
             var records = csv.GetRecordsAsync<Heir>();
             await foreach (var heir in records)
             {
-                HeirsRepository.AddHeir(heir);
+                _heirsRepository.AddHeir(heir);
             }
         }
     }
-    
-    public static async Task ReadAssets(Stream stream)
+
+    public async Task ReadAssets(Stream stream)
     {
-        AssetsRepository.Assets.Clear();
+        _assetsRepository.Assets.Clear();
         using (var reader = new StreamReader(stream, Encoding.UTF8))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
         {
             var records = csv.GetRecordsAsync<Asset>();
             await foreach (var asset in records)
             {
-                AssetsRepository.AddAsset(asset);
+                _assetsRepository.AddAsset(asset);
             }
         }
     }
-    
-    public static async Task ReadTestators(Stream stream)
+
+    public async Task ReadTestators(Stream stream)
     {
-        TestatorRepository.testators.Clear();
+        _testatorRepository.testators.Clear();
         using (var reader = new StreamReader(stream, Encoding.UTF8))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
         {
             var records = csv.GetRecordsAsync<Testator>();
             await foreach (var testator in records)
             {
-                TestatorRepository.AddNewTestator(testator);
+                _testatorRepository.AddNewTestator(testator);
             }
         }
     }

@@ -1,4 +1,9 @@
-@using Arvefordeleren.Components.Layout
+@inject HeirsRepository HeirsRepository
+@inject TestatorRepository TestatorRepository
+@inject ValidationService ValidationService
+@inject TestatorService TestatorService
+
+
 <div class="HeirContainer">
     <div class="TopBox">
         <div>
@@ -65,7 +70,6 @@
 
     private EditContext editContext;
     private bool Note = false;
-    private TestatorService service = new TestatorService();
 
     private int? selectedTestatorId;
     public int? SelectedTestatorId
@@ -79,12 +83,12 @@
                 selectedTestatorId = value;
                 if(selectedTestatorId == 3)
                 {
-                    service.EstablishRelationToHeir(Heir, 1);
-                    service.EstablishRelationToHeir(Heir, 2);
+                    TestatorService.EstablishRelationToHeir(Heir, 1);
+                    TestatorService.EstablishRelationToHeir(Heir, 2);
                 }
                 else
                 {
-                    service.EstablishRelationToHeir(Heir, selectedTestatorId);
+                    TestatorService.EstablishRelationToHeir(Heir, selectedTestatorId);
                 }
             }
         }

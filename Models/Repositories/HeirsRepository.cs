@@ -2,18 +2,18 @@ using Arvefordeleren.Components.Pages;
 
 namespace Arvefordeleren.Models.Repositories
 {
-    public static class HeirsRepository
+    public class HeirsRepository
     {
-        public static List<Heir> Heirs { get; set; } = new List<Heir>();
-        public static List<Person> ForcedHeirs => Shared.SharedData.ForcedHeirs;
+        public List<Heir> Heirs { get; set; } = new List<Heir>();
+        public List<Person> ForcedHeirs => Shared.SharedData.ForcedHeirs;
 
-        public static void AddHeir(Heir heir)
+        public void AddHeir(Heir heir)
         {
             heir.Id = Heirs.Count + 1;
             Heirs.Add(heir);
         }
 
-        public static void RemoveHeir(int id)
+        public void RemoveHeir(int id)
         {
             Heir heir = Heirs.FirstOrDefault(b => b.Id == id);
 
@@ -32,7 +32,7 @@ namespace Arvefordeleren.Models.Repositories
             }
         }
 
-        public static Heir? GetHeirById(int id)
+        public Heir? GetHeirById(int id)
         {
         Heir? heir = Heirs.FirstOrDefault(h => h.Id == id);
 
@@ -44,9 +44,9 @@ namespace Arvefordeleren.Models.Repositories
         return heir;
         }
 
-        public static Action? OnForcedHeirsUpdated { get; set; }
+        public Action? OnForcedHeirsUpdated { get; set; }
 
-        public static void AddHeirToFamilyList(Heir heir, Testator? testator = null)
+        public void AddHeirToFamilyList(Heir heir, Testator? testator = null)
         {
             if (testator != null)
             {
@@ -78,7 +78,7 @@ namespace Arvefordeleren.Models.Repositories
             }
             //PROBLEMER HERRRRRR MED SHARE
         }
-        public static void UpdateShares()
+        public void UpdateShares()
         {
             var children = ForcedHeirs.Where(h => h.Relation == RelationType.Barn).ToList();
             var spouse = ForcedHeirs.FirstOrDefault(h => h is Testator testator && testator.Address != null);
@@ -162,7 +162,7 @@ namespace Arvefordeleren.Models.Repositories
         }
 
 
-        public static void UpdateHeirRelation(Heir heir)
+        public void UpdateHeirRelation(Heir heir)
         {
             var existingHeir = ForcedHeirs.FirstOrDefault(h => h.Id == heir.Id);
             if (existingHeir != null)
@@ -186,14 +186,14 @@ namespace Arvefordeleren.Models.Repositories
             OnForcedHeirsUpdated?.Invoke();
         }
 
-        private static bool IsForcedRelation(RelationType relation)
+        private bool IsForcedRelation(RelationType relation)
         {
             return relation == RelationType.Barn ||
                    relation == RelationType.Barnebarn ||
                    relation == RelationType.Forældre;
         }
 
-        public static void UpdateHeirShare(Person heir, double newShare)
+        public void UpdateHeirShare(Person heir, double newShare)
         {
             double totalWithoutCurrent = ForcedHeirs
                 .Where(h => h.Id != heir.Id)

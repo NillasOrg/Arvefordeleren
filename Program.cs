@@ -1,4 +1,5 @@
 using Arvefordeleren.Components;
+using Arvefordeleren.Models.Repositories;
 using Arvefordeleren.Services;
 using MudBlazor.Services;
 
@@ -10,7 +11,13 @@ builder.Services.AddMudServices();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-
+builder.Services.AddScoped<AssetsRepository>();
+builder.Services.AddScoped<HeirsRepository>();
+builder.Services.AddScoped<TestatorRepository>();
+builder.Services.AddScoped<CSVExporter>();
+builder.Services.AddScoped<CSVImporter>();
+builder.Services.AddScoped<TestatorService>();
+builder.Services.AddScoped<ValidationService>();
 
 var app = builder.Build();
 

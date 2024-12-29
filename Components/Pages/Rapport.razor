@@ -1,7 +1,10 @@
 ﻿@page "/rapport"
-@using System.IO.Compression
-@using Arvefordeleren.Services
 @inject IJSRuntime JS
+@inject AssetsRepository AssetsRepository
+@inject TestatorRepository TestatorRepository
+@inject HeirsRepository HeirsRepository
+@inject CSVExporter CSVExporter
+
 
 <div class="main-container">
     <div class="headliner-container">
@@ -29,8 +32,6 @@
 @code {
     private List<Heir> FreeInheritance { get; set; } = new List<Heir>();
     private List<Person> ForcedInheritance => Models.Shared.SharedData.ForcedHeirs;
-
-
     private List<FreePiechartComponent.PieChartSeriesProps> FreeInheritanceSeries => FreeInheritance.Select(h => new FreePiechartComponent.PieChartSeriesProps { Name = h.Name, Value = h.Share }).ToList();
 
     private async Task _download()
@@ -58,8 +59,6 @@
         await JS.InvokeVoidAsync("downloadFileFromStream", fileName, streamRef);
     }
     private List<ForcedPiechartComponent.PieChartSeriesProps> ForcedInheritanceSeries => ForcedInheritance.Select(h => new ForcedPiechartComponent.PieChartSeriesProps { Name = h.Name, Value = h.Share }).ToList();
-
-    private List<Heir> HeirsList { get; set; } = HeirsRepository.Heirs;
 
     protected override void OnInitialized()
     {

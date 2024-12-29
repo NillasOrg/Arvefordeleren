@@ -1,5 +1,6 @@
 @page "/Arvinger"
-@using Arvefordeleren.Components.Layout
+@inject HeirsRepository HeirsRepository
+@inject TestatorRepository TestatorRepository
 
 <div class="HeirContainer">
     <div class="TopContainer">
@@ -21,9 +22,6 @@
 
 @code {
     [CascadingParameter] public NavMenu? NavMenu { get; set; }
-    private List<Heir> HeirsList { get; set; } = HeirsRepository.Heirs;
-    private List<Testator> testatorList { get; set; } = TestatorRepository.testators;
-
     protected override void OnInitialized()
     {
         Validate();
@@ -40,7 +38,7 @@
     {
         HeirsRepository.RemoveHeir(heir.Id);
 
-        foreach (var testator in testatorList)
+        foreach (var testator in TestatorRepository.testators)
         {
             if (testator.Heirs.Any(h => h.Id == heir.Id))
             {

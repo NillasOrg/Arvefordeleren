@@ -1,21 +1,21 @@
 namespace Arvefordeleren.Models.Repositories;
 
-public static class AssetsRepository
+public class AssetsRepository
 {
+    // Instance-level properties
+    public List<Asset> Assets { get; set; } = new List<Asset>();
+    public bool Car { get; set; } = false;
+    public bool Home { get; set; } = false;
+    public bool TempBool { get; set; } = false;
 
-    public static List<Asset> Assets { get; set; } = new List<Asset>();
-    public static bool Car { get; set; } = false;
-    public static bool Home { get; set; } = false;
-    public static bool TempBool { get; set; } = false;
-
-
-    public static void AddAsset(Asset asset)
+    // Methods
+    public void AddAsset(Asset asset)
     {
         asset.Id = Assets.Count + 1;
         Assets.Add(asset);
     }
 
-    public static void RemoveAsset(int id)
+    public void RemoveAsset(int id)
     {
         Asset asset = Assets.FirstOrDefault(a => a.Id == id);
 
@@ -25,7 +25,7 @@ public static class AssetsRepository
         }
     }
 
-    public static Asset? GetAssetById(int id)
+    public Asset? GetAssetById(int id)
     {
         Asset? asset = Assets.FirstOrDefault(a => a.Id == id);
         
@@ -37,13 +37,12 @@ public static class AssetsRepository
         return asset;
     }
 
-    public static void UpdateAsset(Asset asset)
-{
-    var existingAsset = Assets.FirstOrDefault(a => a.Id == asset.Id);
-    if (existingAsset != null)
+    public void UpdateAsset(Asset asset)
     {
-        existingAsset.IsCar = asset.IsCar;
+        var existingAsset = Assets.FirstOrDefault(a => a.Id == asset.Id);
+        if (existingAsset != null)
+        {
+            existingAsset.IsCar = asset.IsCar;
+        }
     }
-}
-
 }
