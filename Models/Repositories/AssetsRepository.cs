@@ -1,4 +1,5 @@
 namespace Arvefordeleren.Models.Repositories;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 public class AssetsRepository
 {
