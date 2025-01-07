@@ -26,4 +26,8 @@
       <PackageReference Include="MudBlazor" Version="7.15.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ArvefordelerAPI\ArvefordelerAPI.csproj" />
+    </ItemGroup>
+
 </Project>

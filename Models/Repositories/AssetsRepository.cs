@@ -2,10 +2,12 @@ namespace Arvefordeleren.Models.Repositories;
 
 public class AssetsRepository
 {
+
     // Instance-level properties
     public List<Asset> Assets { get; set; } = new List<Asset>();
     public bool Car { get; set; } = false;
     public bool Home { get; set; } = false;
+    public string? Note { get; set; }
     public bool TempBool { get; set; } = false;
 
     // Methods

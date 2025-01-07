@@ -1,4 +1,5 @@
 using Arvefordeleren.Components;
+using Arvefordeleren.Data;
 using Arvefordeleren.Models.Repositories;
 using Arvefordeleren.Services;
 using MudBlazor.Services;
@@ -11,6 +12,9 @@ builder.Services.AddMudServices();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<AssetService>();
 builder.Services.AddScoped<AssetsRepository>();
 builder.Services.AddScoped<HeirsRepository>();
 builder.Services.AddScoped<TestatorRepository>();

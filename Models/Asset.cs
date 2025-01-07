@@ -8,6 +8,7 @@ public class Asset
     public bool IsCar { get; set; }
     public bool IsHome { get; set; }
     public bool IsTempBool { get; set; }
+
     public string Icon 
     {
         get
@@ -34,6 +35,15 @@ public class Asset
     public Asset(AssetType type)
     {
         Type = type;
+    }
+
+    public Asset(int id, AssetType type, string? note, bool isCar, bool isHome)
+    {
+        Id = id;
+        Type = type;
+        Note = note;
+        IsCar = isCar;
+        IsHome = isHome;
     }
 }
 

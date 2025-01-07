@@ -1,5 +1,6 @@
 ﻿@page "/Aktiv"
 @inject AssetsRepository AssetsRepository
+@inject AssetService AssetService
 
 <div class="AssetContainer">
     <div class="TopContainer">
@@ -104,8 +105,8 @@
 
     private void AddAsset()
     {
-        var asset = new Asset(AssetType.Værdigenstand);
-        AssetsRepository.AddAsset(asset);
+       var asset = new Asset(AssetType.Bolig);
+       AssetsRepository.AddAsset(asset);
     }
 
     private void HandleClose(Asset asset)

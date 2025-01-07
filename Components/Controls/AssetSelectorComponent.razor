@@ -1,4 +1,7 @@
-﻿<div class="AssetContainer">
+﻿@inject AssetService assetService
+@inject AssetsRepository AssetsRepository
+
+<div class="AssetContainer">
     <div>
         <div>
             <h4>Aktiv</h4>
@@ -19,16 +22,23 @@
 
         @if (Note || asset.Note != null)
         {
-        <InputText @bind-Value="asset.Note" id="inputBox" placeholder="Note"/>
+            <InputText @bind-Value="asset.Note" id="inputBox" placeholder="Note" />
         }
         else
         {
-        <div class="NoteBox">
-            <a @onclick="() => Note = true">Tilføj Note (+)</a>
-        </div>
+            <div class="NoteBox">
+                <a @onclick="() => Note = true">Tilføj Note (+)</a>
+            </div>
         }
+        <div>
+            <button type="submit" @onclick="() => SaveToDB(asset)">
+                Gem aktiv
+            </button>
+        </div>
     </EditForm>
-    
+
+
+
     <div class="tooltip">
         Hjælp
         <span class="tooltiptext">Her skal du oprette dine aktiver. De kan være af forskellig type. Tilføj en note med en tekst for at uddybe hvor du kan. Det gør vores arbejde nemmere!</span>
@@ -51,6 +61,14 @@
         {
             await OnClose.InvokeAsync(asset);
         }
+    }
+
+    private async Task SaveToDB(Asset asset)
+    {
+        await assetService.CreateAsset(asset);
+
+        
+
     }
 
 }
