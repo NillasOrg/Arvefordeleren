@@ -13,10 +13,7 @@ public class CSVImporter
     private readonly TestatorRepository _testatorRepository;
 
     // Constructor injection for dependencies
-    public CSVImporter(
-        HeirsRepository heirsRepository, 
-        AssetsRepository assetsRepository, 
-        TestatorRepository testatorRepository)
+    public CSVImporter(HeirsRepository heirsRepository, AssetsRepository assetsRepository, TestatorRepository testatorRepository)
     {
         _heirsRepository = heirsRepository;
         _assetsRepository = assetsRepository;
