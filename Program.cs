@@ -2,6 +2,7 @@ using Arvefordeleren.Components;
 using Arvefordeleren.Data;
 using Arvefordeleren.Models.Repositories;
 using Arvefordeleren.Services;
+using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
 
 
@@ -14,7 +15,10 @@ builder.Services.AddRazorComponents()
 
 
 builder.Services.AddHttpClient();
-builder.Services.AddScoped<AssetService>();
+
+builder.Services.AddDbContext<DataContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddScoped<AssetsRepository>();
 builder.Services.AddScoped<HeirsRepository>();
 builder.Services.AddScoped<TestatorRepository>();

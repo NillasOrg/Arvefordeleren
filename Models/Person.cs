@@ -5,8 +5,8 @@ namespace Arvefordeleren.Models
     public class Person
     {
         public int Id { get; set; }
-        [Required (AllowEmptyStrings = false, ErrorMessage = "Navn skal udfyldes!")]
-        public string Name { get; set; }
+        //[Required(AllowEmptyStrings = false, ErrorMessage =("Du skal huske at indtaste et navn!"))]
+        public string? Name { get; set; }
         public double Share { get; set; }
         public string? Address { get; set; }
         public RelationType? Relation { get; set; }

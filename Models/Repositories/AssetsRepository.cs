@@ -1,8 +1,9 @@
+using Arvefordeleren.Data;
+
 namespace Arvefordeleren.Models.Repositories;
 
 public class AssetsRepository
 {
-
     // Instance-level properties
     public List<Asset> Assets { get; set; } = new List<Asset>();
     public bool Car { get; set; } = false;
@@ -10,12 +11,20 @@ public class AssetsRepository
     public string? Note { get; set; }
     public bool TempBool { get; set; } = false;
 
-    // Methods
+    
+    private readonly DataContext _dataContext;
+
+    public AssetsRepository(DataContext dataContext)
+    {
+        _dataContext = dataContext;
+    }
+
     public void AddAsset(Asset asset)
     {
-        asset.Id = Assets.Count + 1;
         Assets.Add(asset);
     }
+
+  
 
     public void RemoveAsset(int id)
     {
@@ -30,7 +39,7 @@ public class AssetsRepository
     public Asset? GetAssetById(int id)
     {
         Asset? asset = Assets.FirstOrDefault(a => a.Id == id);
-        
+
         if (asset == null)
         {
             throw new InvalidOperationException($"Aktiv med Id {id} blev ikke fundet.");

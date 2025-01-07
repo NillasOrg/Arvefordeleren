@@ -1,27 +1,37 @@
-﻿using Arvefordeleren.Models;
+﻿using Arvefordeleren.Data;
+using Arvefordeleren.Models;
 using Arvefordeleren.Models.Repositories;
+using System.Text;
+using System.Text.Json;
 
 namespace Arvefordeleren.Services
 {
     public class TestatorService
     {
-        private readonly TestatorRepository _testatorRepository;
 
-        public TestatorService(TestatorRepository repository)
+        
+
+        public TestatorService()
         {
-            _testatorRepository = repository;
+            APIContext.Initialize();
+            
         }
-        public void EstablishRelationToHeir(Heir heir, int? selectedTestatorId)
-        {
-            if (selectedTestatorId.HasValue)
-            {
-                var newTestator = _testatorRepository.testators.FirstOrDefault(t => t.Id == selectedTestatorId);
 
-                if (newTestator != null && !newTestator.Heirs.Any(h => h.Id == heir.Id))
+        public async Task<Testator> CreateTestator(Testator testator)
+        {
+            var content = new StringContent(JsonSerializer.Serialize(testator), Encoding.UTF8, "application/json");
+            using (HttpResponseMessage response = await APIContext._apiClient.PostAsJsonAsync("/api/testators", content))
+            {
+                if (response.IsSuccessStatusCode)
                 {
-                    newTestator.Heirs.Add(heir);
+                    //Testator testatorToBeCreated = await response.Content.ReadFromJsonAsync<Testator>();
+                    //return testatorToBeCreated;
                 }
+
+                throw new Exception(await response.Content.ReadAsStringAsync());
             }
         }
+
+       
     }
 }

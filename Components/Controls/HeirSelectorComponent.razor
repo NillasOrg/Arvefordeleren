@@ -83,12 +83,12 @@
                 selectedTestatorId = value;
                 if(selectedTestatorId == 3)
                 {
-                    TestatorService.EstablishRelationToHeir(Heir, 1);
-                    TestatorService.EstablishRelationToHeir(Heir, 2);
+                    TestatorRepository.EstablishRelationToHeir(Heir, 1);
+                    TestatorRepository.EstablishRelationToHeir(Heir, 2);
                 }
                 else
                 {
-                    TestatorService.EstablishRelationToHeir(Heir, selectedTestatorId);
+                    TestatorRepository.EstablishRelationToHeir(Heir, selectedTestatorId);
                 }
             }
         }

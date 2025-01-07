@@ -4,11 +4,11 @@
 
 <div class="testator-container">
     <EditForm EditContext="_editContext">
-        <DataAnnotationsValidator />
+        <DataAnnotationsValidator/>
         <div class="form-group">
-            <ValidationMessage For="() => Testator.Name"></ValidationMessage>
             <label for="name">Navn *</label>
             <InputText id="name" @bind-Value="Testator.Name" type="text" placeholder="Indtast Navn" />
+            @* <ValidationMessage For="() => Testator.Name"></ValidationMessage> *@
         </div>
 
         <div class="form-group">

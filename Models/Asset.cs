@@ -1,10 +1,15 @@
-﻿namespace Arvefordeleren.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+
+namespace Arvefordeleren.Models;
 
 public class Asset
 {
     public int Id { get; set; }
     public AssetType Type { get; set; }
-    public string? Note { get; set; }
+
+    [Required(AllowEmptyStrings = false, ErrorMessage ="Du skal tilføje en beskrivelse af genstanden!")]  
+    public string? Note { get; set; } 
     public bool IsCar { get; set; }
     public bool IsHome { get; set; }
     public bool IsTempBool { get; set; }

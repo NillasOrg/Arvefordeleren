@@ -1,6 +1,6 @@
 ﻿@page "/Aktiv"
 @inject AssetsRepository AssetsRepository
-@inject AssetService AssetService
+
 
 <div class="AssetContainer">
     <div class="TopContainer">
@@ -50,7 +50,7 @@
     private bool Home;
     private bool TempBool;
 
-    
+
     protected override void OnInitialized()
     {
         NavMenu.IsValid = true;
@@ -105,8 +105,9 @@
 
     private void AddAsset()
     {
-       var asset = new Asset(AssetType.Bolig);
-       AssetsRepository.AddAsset(asset);
+        var asset = new Asset(AssetType.Bolig);
+        AssetsRepository.AddAsset(asset);
+
     }
 
     private void HandleClose(Asset asset)

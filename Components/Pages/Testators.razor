@@ -41,6 +41,10 @@
                 </div>
             }
 
+            <button @onclick="Save">
+                Gem arvelader(e)
+            </button>
+
             if (TestatorRepository.testators.Count == 1)
             {
                 <div class="body-container">
@@ -80,17 +84,17 @@
         {
             TestatorRepository.AddNewTestator(new Testator());
         }
-        
+
         Validate();
     }
-    
+
     protected override void OnInitialized()
     {
         if (TestatorRepository.testators.Count == 2)
         {
             IsSecondary = true;
         }
-        
+
         if (!TestatorRepository.testators.Any())
         {
             TestatorRepository.AddNewTestator(new Testator());
@@ -100,10 +104,15 @@
         {
             NavMenu.IsValid = false;
         }
-        
+
         Validate();
     }
-    
+
+    private void Save()
+    {
+        TestatorRepository.AddAllTestator();
+    }
+
     private void Validate()
     {
         if (NavMenu != null)
