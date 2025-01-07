@@ -8,7 +8,7 @@ public class Asset
     public int Id { get; set; }
     public AssetType Type { get; set; }
 
-    [Required(AllowEmptyStrings = false, ErrorMessage ="Du skal tilføje en beskrivelse af genstanden!")]  
+    
     public string? Note { get; set; } 
     public bool IsCar { get; set; }
     public bool IsHome { get; set; }

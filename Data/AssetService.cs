@@ -17,13 +17,12 @@ namespace Arvefordeleren.Data
 
         public async Task<Asset> CreateAsset(Asset asset)
         {
-            var content = new StringContent(JsonSerializer.Serialize(asset), Encoding.UTF8, "application/json");
-            using (HttpResponseMessage response = await APIContext._apiClient.PostAsJsonAsync("/api/assets", content))
+            
+            using (HttpResponseMessage response = await APIContext._apiClient.PostAsJsonAsync("/api/assets", asset))
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    Asset createdAsset = await response.Content.ReadFromJsonAsync<Asset>();
-                    return createdAsset;
+                   return asset;
                 }
 
                 throw new Exception(await response.Content.ReadAsStringAsync());

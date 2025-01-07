@@ -14,6 +14,8 @@ public class AssetsRepository
     
     private readonly DataContext _dataContext;
 
+    private AssetService assetService = new AssetService();
+
     public AssetsRepository(DataContext dataContext)
     {
         _dataContext = dataContext;
@@ -25,6 +27,13 @@ public class AssetsRepository
     }
 
   
+    public async void AddAllAssets()
+    {
+        foreach(var asset in Assets)
+        {
+            await assetService.CreateAsset(asset);
+        }
+    }
 
     public void RemoveAsset(int id)
     {

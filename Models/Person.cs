@@ -4,11 +4,11 @@ namespace Arvefordeleren.Models
 {
     public class Person
     {
+        [Key]
         public int Id { get; set; }
-        //[Required(AllowEmptyStrings = false, ErrorMessage =("Du skal huske at indtaste et navn!"))]
+        [Required(AllowEmptyStrings = false, ErrorMessage = ("Navn er påkrævet!"))]
         public string? Name { get; set; }
-        public double Share { get; set; }
-        public string? Address { get; set; }
+        public double Share { get; set; }     
         public RelationType? Relation { get; set; }
 
         public string? Icon

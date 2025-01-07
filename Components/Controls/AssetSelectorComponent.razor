@@ -1,5 +1,4 @@
-﻿
-@inject AssetsRepository AssetsRepository
+﻿@inject AssetsRepository AssetsRepository
 
 <div class="AssetContainer">
     <div>
@@ -12,7 +11,8 @@
             </button>
         </div>
     </div>
-    <EditForm Model="asset">        
+    <EditForm Model="asset">
+        
         <InputSelect @bind-Value="asset.Type" name="Types">
             @foreach (AssetType type in Enum.GetValues(typeof(AssetType)))
             {
@@ -22,7 +22,8 @@
 
         @if (Note || asset.Note != null)
         {
-            <InputText @bind-Value="asset.Note" id="inputBox" placeholder="Note" />          
+            <InputText @bind-Value="asset.Note" id="inputBox" placeholder="Note"  />     
+            
                        
         }
         else

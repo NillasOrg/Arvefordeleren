@@ -28,6 +28,11 @@
                 <MudSwitch @bind-Value="TempBool" Color="Color.Success" Size="Size.Large" />
             </div>
         </div>
+        <div>
+            <button @onclick="Save">
+                Gem aktiv
+            </button>
+        </div>
        
     </div>
 
@@ -103,10 +108,16 @@
         }
     }
 
+    private void Save()
+    {
+        AssetsRepository.AddAllAssets();
+    }
+
     private void AddAsset()
     {
         var asset = new Asset(AssetType.Bolig);
         AssetsRepository.AddAsset(asset);
+        StateHasChanged();
 
     }
 
