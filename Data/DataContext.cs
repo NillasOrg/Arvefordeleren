@@ -7,7 +7,6 @@ namespace Arvefordeleren.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-
         }
 
         public DbSet<Asset> Assets { get; set; }

@@ -45,6 +45,16 @@
                 Gem arvelader(e)
             </button>
 
+            @if (showPopup)
+            {
+                <div class="modal">
+                    <div class="modal-content">
+                        <span class="close" @onclick="ClosePopup">&times;</span>
+                        <p>Tilføjelserne er gemt!</p>
+                    </div>
+                </div>
+            }
+
             if (TestatorRepository.testators.Count == 1)
             {
                 <div class="body-container">
@@ -63,7 +73,11 @@
 @code {
     [CascadingParameter] public NavMenu? NavMenu { get; set; }
     private bool _isSecondary;
+    private bool showPopup = false;
+
+
     public bool IsSecondary
+
     {
         get => _isSecondary;
         set
@@ -111,6 +125,13 @@
     private void Save()
     {
         TestatorRepository.AddAllTestator();
+        StateHasChanged();
+        showPopup = true;
+    }
+
+    private void ClosePopup()
+    {
+        showPopup = false;  // Skjuler modal-dialogen
     }
 
     private void Validate()

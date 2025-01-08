@@ -8,11 +8,11 @@ namespace Arvefordeleren.Services
 {
     public class TestatorService
     {
-
         public TestatorService()
         {
             APIContext.Initialize();
         }
+       
 
         public async Task<Testator> CreateTestator(Testator testator)
         {
@@ -27,7 +27,6 @@ namespace Arvefordeleren.Services
                 throw new Exception(await response.Content.ReadAsStringAsync());
             }
         }
-
 
     }
 }

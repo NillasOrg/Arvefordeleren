@@ -1,7 +1,10 @@
-﻿namespace Arvefordeleren.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Arvefordeleren.Models
 {
     public class Testator : Person
     {
+        
         public string Name { get; set; }
         public bool isMarried { get; set; }
 
